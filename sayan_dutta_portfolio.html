@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sayan Dutta</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0a0a;
+  --surface:#111111;
+  --border:#1e1e1e;
+  --text:#f0ede8;
+  --muted:#666;
+  --accent:#c8f542;
+  --accent2:#8b7cf8;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+.cursor{
+  position:fixed;
+  width:8px;height:8px;
+  background:var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transition:transform .15s ease;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border:1px solid var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transition:all .25s ease;
+  opacity:.5;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 4rem;
+  border-bottom:1px solid transparent;
+  transition:all .3s;
+}
+nav.scrolled{
+  background:rgba(10,10,10,.9);
+  border-color:var(--border);
+  backdrop-filter:blur(12px);
+}
+.nav-logo{
+  font-size:1.1rem;font-weight:700;letter-spacing:-.02em;
+  color:var(--text);text-decoration:none;
+}
+.nav-links{display:flex;gap:2.5rem;}
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:.8rem;letter-spacing:.05em;
+  color:var(--muted);text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--accent);}
+section{padding:7rem 4rem;}
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:7rem 4rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-tag{
+  font-family:'DM Mono',monospace;
+  font-size:.75rem;letter-spacing:.15em;
+  color:var(--accent);text-transform:uppercase;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .8s .2s forwards;
+}
+.hero-name{
+  font-size:clamp(3.5rem,8vw,7rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:.95;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .8s .4s forwards;
+}
+.hero-name span{color:var(--accent);}
+.hero-desc{
+  font-family:'DM Mono',monospace;
+  font-size:.9rem;color:var(--muted);
+  max-width:480px;line-height:1.8;
+  margin-bottom:3rem;
+  opacity:0;animation:fadeUp .8s .6s forwards;
+}
+.hero-actions{
+  display:flex;gap:1.5rem;align-items:center;
+  opacity:0;animation:fadeUp .8s .8s forwards;
+}
+.btn-primary{
+  background:var(--accent);color:#0a0a0a;
+  padding:.8rem 2rem;border-radius:2px;
+  font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:.05em;
+  text-decoration:none;font-weight:500;
+  transition:all .2s;display:inline-block;
+}
+.btn-primary:hover{background:#d4ff4a;transform:translateY(-2px);}
+.btn-ghost{
+  color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:.8rem;letter-spacing:.05em;text-decoration:none;
+  display:flex;align-items:center;gap:.5rem;
+  transition:color .2s;
+}
+.btn-ghost:hover{color:var(--text);}
+.btn-ghost::after{content:'→';transition:transform .2s;}
+.btn-ghost:hover::after{transform:translateX(4px);}
+.hero-status{
+  position:absolute;top:8rem;right:4rem;
+  font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted);
+  display:flex;align-items:center;gap:.6rem;
+  opacity:0;animation:fadeIn .8s 1s forwards;
+}
+.status-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-scroll{
+  position:absolute;bottom:3rem;right:4rem;
+  font-family:'DM Mono',monospace;font-size:.7rem;
+  color:var(--muted);letter-spacing:.1em;
+  writing-mode:vertical-rl;
+  display:flex;align-items:center;gap:.8rem;
+  opacity:0;animation:fadeIn 1s 1.2s forwards;
+}
+.hero-scroll::after{
+  content:'';width:1px;height:80px;
+  background:linear-gradient(var(--muted),transparent);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:.7rem;letter-spacing:.2em;color:var(--accent);
+  text-transform:uppercase;margin-bottom:3rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-label::before{content:'';flex:0 0 40px;height:1px;background:var(--accent);}
+.section-title{
+  font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:800;letter-spacing:-.03em;
+  line-height:1;margin-bottom:3rem;
+}
+.about{background:var(--surface);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.about-text{font-family:'DM Mono',monospace;font-size:.88rem;color:var(--muted);line-height:2;max-width:480px;}
+.about-text p+p{margin-top:1.5rem;}
+.about-text em{color:var(--text);font-style:normal;}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.stat-card{
+  background:var(--surface);
+  padding:2rem;
+}
+.stat-num{font-size:3rem;font-weight:800;letter-spacing:-.04em;color:var(--accent);}
+.stat-label{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted);margin-top:.3rem;}
+.skills-row{
+  margin-top:2rem;
+  display:flex;flex-wrap:wrap;gap:.5rem;
+}
+.skill-tag{
+  font-family:'DM Mono',monospace;font-size:.7rem;
+  border:1px solid var(--border);padding:.4rem .9rem;
+  color:var(--muted);transition:all .2s;cursor:default;
+}
+.skill-tag:hover{border-color:var(--accent);color:var(--accent);}
+.projects-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--border);margin-top:2rem;
+}
+.project-card{
+  background:var(--bg);padding:3rem;
+  transition:background .3s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.project-card::before{
+  content:'';position:absolute;
+  inset:0;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.76,0,.24,1);
+  opacity:.04;
+}
+.project-card:hover::before{transform:scaleX(1);}
+.project-card:hover{background:var(--surface);}
+.project-num{
+  font-family:'DM Mono',monospace;
+  font-size:.7rem;color:var(--muted);
+  margin-bottom:1.5rem;
+}
+.project-title{
+  font-size:1.5rem;font-weight:700;letter-spacing:-.02em;
+  margin-bottom:1rem;
+}
+.project-desc{
+  font-family:'DM Mono',monospace;
+  font-size:.8rem;color:var(--muted);line-height:1.9;
+  margin-bottom:2rem;
+}
+.project-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:2rem;}
+.project-tag{
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  background:var(--surface);padding:.3rem .7rem;
+  color:var(--muted);border:1px solid var(--border);
+}
+.project-arrow{
+  font-size:1.2rem;color:var(--accent);
+  transition:transform .2s;display:inline-block;
+}
+.project-card:hover .project-arrow{transform:translate(4px,-4px);}
+.experience{background:var(--surface);}
+.timeline{display:flex;flex-direction:column;gap:0;margin-top:2rem;}
+.timeline-item{
+  display:grid;grid-template-columns:200px 1fr;
+  gap:3rem;padding:2.5rem 0;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.timeline-item:first-child{border-top:1px solid var(--border);}
+.timeline-date{
+  font-family:'DM Mono',monospace;
+  font-size:.75rem;color:var(--muted);
+  padding-top:.2rem;
+}
+.timeline-role{font-size:1.1rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.3rem;}
+.timeline-company{
+  font-family:'DM Mono',monospace;font-size:.8rem;
+  color:var(--accent);margin-bottom:.8rem;
+}
+.timeline-desc{
+  font-family:'DM Mono',monospace;font-size:.8rem;
+  color:var(--muted);line-height:1.9;
+}
+.contact{text-align:center;padding:8rem 4rem;}
+.contact-big{
+  font-size:clamp(3rem,7vw,6rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1;margin-bottom:2rem;
+}
+.contact-big span{
+  color:transparent;
+  -webkit-text-stroke:1px var(--border);
+  transition:all .3s;
+}
+.contact-big:hover span{
+  -webkit-text-stroke-color:var(--accent);
+}
+.contact-sub{
+  font-family:'DM Mono',monospace;
+  font-size:.85rem;color:var(--muted);margin-bottom:3rem;
+}
+.contact-links{display:flex;justify-content:center;gap:2rem;}
+.contact-link{
+  font-family:'DM Mono',monospace;font-size:.8rem;
+  color:var(--muted);text-decoration:none;
+  display:flex;align-items:center;gap:.5rem;
+  transition:color .2s;
+}
+.contact-link:hover{color:var(--accent);}
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 4rem;
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.4,0,.2,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">SD</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Journey</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-status">
+    <span class="status-dot"></span>
+    Available for opportunities
+  </div>
+  <div class="hero-tag">AI/ML Engineer & Full-Stack Developer</div>
+  <h1 class="hero-name">Sayan<br/><span>Dutta</span></h1>
+  <p class="hero-desc">Building intelligent systems at the intersection of AI and software engineering. B.Tech in Robotics & AI @ UEM, 2024–28.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="https://www.linkedin.com/in/sayan-dutta2006" class="btn-ghost">LinkedIn</a>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-label">About</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Building the<br/>future, one<br/>model at a time.</h2>
+      <div class="skills-row">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">FastAPI</span>
+        <span class="skill-tag">LangChain</span>
+        <span class="skill-tag">LangGraph</span>
+        <span class="skill-tag">GCP</span>
+        <span class="skill-tag">RAG</span>
+        <span class="skill-tag">Firestore</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Neo4j</span>
+        <span class="skill-tag">Pinecone</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Gemini API</span>
+      </div>
+    </div>
+    <div>
+      <div class="about-text">
+        <p>I'm a <em>Robotics & AI student</em> at the University of Engineering and Management, Kolkata — obsessed with building end-to-end AI-powered applications that actually work in production.</p>
+        <p>My focus is on <em>LLM-powered backends, RAG architectures,</em> and cloud-native systems on GCP. I learn by building — every project is a chance to go deeper.</p>
+        <p>Currently deep in video intelligence, graph databases, and multi-agent systems. Always looking to collaborate on ambitious projects.</p>
+      </div>
+      <div class="about-stats" style="margin-top:2rem;">
+        <div class="stat-card">
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Projects built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">4yr</div>
+          <div class="stat-label">B.Tech '24–'28</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">APIs integrated</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1st</div>
+          <div class="stat-label">Year undergrad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="padding:7rem 4rem;">
+  <div class="section-label reveal">Work</div>
+  <h2 class="section-title reveal">Selected<br/>Projects</h2>
+  <div class="projects-grid reveal">
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-title">Resume Reviewer</div>
+      <div class="project-desc">AI-powered resume analysis with semantic search. FastAPI backend with LangChain, Gemini embeddings, Pinecone vector DB, and Supabase storage. Deployed on GCP Cloud Run.</div>
+      <div class="project-tags">
+        <span class="project-tag">FastAPI</span>
+        <span class="project-tag">Gemini</span>
+        <span class="project-tag">Pinecone</span>
+        <span class="project-tag">Cloud Run</span>
+        <span class="project-tag">RAG</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-title">Video Intelligence</div>
+      <div class="project-desc">GCP-native video processing pipeline using Cloud Storage, Firestore, and Pub/Sub. Async event-driven architecture for intelligent video analysis at scale.</div>
+      <div class="project-tags">
+        <span class="project-tag">GCS</span>
+        <span class="project-tag">Firestore</span>
+        <span class="project-tag">Pub/Sub</span>
+        <span class="project-tag">FastAPI</span>
+        <span class="project-tag">Python</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-title">Movie Recommendation Graph</div>
+      <div class="project-desc">Graph-based movie recommendation engine built on Neo4j with Cypher queries and FastAPI. Leverages graph relationships for contextual, accurate recommendations.</div>
+      <div class="project-tags">
+        <span class="project-tag">Neo4j</span>
+        <span class="project-tag">Cypher</span>
+        <span class="project-tag">FastAPI</span>
+        <span class="project-tag">Graph DB</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-title">Job Search MCP Server</div>
+      <div class="project-desc">Custom MCP server built with FastMCP SDK for intelligent job search assistance. Integrates with Claude Desktop for seamless AI-powered workflow automation.</div>
+      <div class="project-tags">
+        <span class="project-tag">FastMCP</span>
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Claude</span>
+        <span class="project-tag">MCP Protocol</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="section-label reveal">Journey</div>
+  <h2 class="section-title reveal">Learning<br/>Timeline</h2>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-date">2024 — Present</div>
+      <div>
+        <div class="timeline-role">B.Tech — Robotics & AI</div>
+        <div class="timeline-company">University of Engineering and Management, Kolkata</div>
+        <div class="timeline-desc">Pursuing core AI/ML curriculum while building real-world projects in parallel. Specializing in LLM applications and cloud-native backends.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2024</div>
+      <div>
+        <div class="timeline-role">Mastered Python Backend Development</div>
+        <div class="timeline-company">Self-directed · FastAPI / GCP / LangChain</div>
+        <div class="timeline-desc">Transitioned from MERN stack to Python backend. Built and deployed production-ready APIs with FastAPI, learned GCP cloud services end-to-end.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2023</div>
+      <div>
+        <div class="timeline-role">Full-Stack Development</div>
+        <div class="timeline-company">Self-directed · MERN Stack</div>
+        <div class="timeline-desc">Built complete web applications using MongoDB, Express, React, and Node.js. Developed strong frontend instincts that continue to inform my work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-label reveal" style="justify-content:center;margin-bottom:2rem;">
+    <span>Get in touch</span>
+  </div>
+  <div class="contact-big reveal">
+    Let's build<br/><span>something</span><br/>great.
+  </div>
+  <p class="contact-sub reveal">Open to collaborations, internships & interesting problems.</p>
+  <div class="contact-links reveal">
+    <a href="https://www.linkedin.com/in/sayan-dutta2006" class="contact-link">↗ LinkedIn</a>
+    <a href="mailto:sayan@example.com" class="contact-link">↗ Email</a>
+    <a href="https://github.com/" class="contact-link">↗ GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <span>Sayan Dutta © 2025</span>
+  <span>Kolkata, India — Robotics & AI</span>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx-4+'px';
+  cursor.style.top=my-4+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx-18+'px';
+  ring.style.top=ry-18+'px';
+  requestAnimationFrame(animRing);
+}animRing();
+
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+  });
+},{threshold:.1});
+reveals.forEach(el=>obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
