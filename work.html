@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Selected work by Sayan Dutta — RAG pipelines, agentic systems, and bias-mitigation platforms, all shipped to production.">
+<title>Work — Sayan Dutta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div id="preloader"><div class="pl-name">Sayan Dutta</div></div>
+<div id="transition"></div>
+<div class="ambient"></div>
+<div class="grain"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><span class="dot"></span>Sayan Dutta</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="experience.html">Experience</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main>
+
+  <!-- HEADER -->
+  <section class="page-header">
+    <div class="wrap">
+      <div class="eyebrow reveal">Selected work</div>
+      <h1 class="h-display reveal d1">Things I've<br><span class="soft">actually built.</span></h1>
+      <p class="lead reveal d2" style="margin-top:1.8rem">Every project below has been deployed and run. No mockups, no "coming soon." Proof, not promises.</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap">
+      <div class="project-list">
+
+        <a href="https://github.com/sayan1506" target="_blank" rel="noopener" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">01</span>
+            <span class="project-name">FairGuard Enterprise</span>
+            <span class="project-badge">Featured</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">A GCP-native AI bias-mitigation pipeline. Three coordinated agents — Schema, Ethics, and Storyteller — run on the Claude API, with Vertex AI AutoML driving NSGA-II Pareto optimization to balance fairness against accuracy. Canary deployment on Cloud Run, a Streamlit compliance dashboard, and the whole footprint provisioned through Terraform.</p>
+          <div class="project-tags"><span>Vertex AI</span><span>Cloud Run</span><span>LangGraph</span><span>Claude API</span><span>Terraform</span><span>Optuna</span></div>
+        </a>
+
+        <a href="https://resume-reviewer-navy.vercel.app" target="_blank" rel="noopener" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">02</span>
+            <span class="project-name">Resume Reviewer</span>
+            <span class="project-badge">Live</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">RAG-powered resume analysis. PyPDFLoader for ingestion, Gemini embeddings, and Pinecone for retrieval — deployed on Cloud Run with Firebase Hosting and Secret Manager.</p>
+          <div class="project-tags"><span>FastAPI</span><span>Pinecone</span><span>Gemini</span><span>GCP</span></div>
+        </a>
+
+        <a href="https://video-intelligence-v1.web.app" target="_blank" rel="noopener" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">03</span>
+            <span class="project-name">Video Intelligence Platform</span>
+            <span class="project-badge">Live</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">Async GCP video-analysis pipeline with a Firebase-hosted frontend. Runs video through AI models to extract structured intelligence at scale, without blocking on long jobs.</p>
+          <div class="project-tags"><span>GCP</span><span>Firebase</span><span>Async</span></div>
+        </a>
+
+        <a href="https://github.com/sayan1506" target="_blank" rel="noopener" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">04</span>
+            <span class="project-name">PAI — Personal Assistant</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">A JARVIS-inspired open-source desktop voice assistant. Terminal to voice to browser and app control, built in phases on a modular architecture so each capability slots in cleanly.</p>
+          <div class="project-tags"><span>Python</span><span>Voice AI</span><span>Open Source</span></div>
+        </a>
+
+        <a href="https://github.com/sayan1506" target="_blank" rel="noopener" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">05</span>
+            <span class="project-name">GraphRAG Pipeline</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">Knowledge graph meets vector search. A Neo4j + FAISS hybrid retriever combining Cypher queries with dense embeddings for structured reasoning over unstructured data.</p>
+          <div class="project-tags"><span>Neo4j</span><span>FAISS</span><span>LangChain</span></div>
+        </a>
+
+        <a href="https://github.com/sayan1506" target="_blank" rel="noopener" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">06</span>
+            <span class="project-name">MCP Job Search Assistant</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">A FastMCP server wired into Claude Desktop for job-search automation. An agentic workflow that reaches live job APIs through the Model Context Protocol and reasons over the results.</p>
+          <div class="project-tags"><span>FastMCP</span><span>Claude</span><span>Agentic</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow reveal">More</div>
+      <h2 class="h-section reveal d1">The repos, the commits,<br><span class="soft">the messy middle.</span></h2>
+      <div class="btn-row reveal d2" style="margin-top:2.5rem">
+        <a href="https://github.com/sayan1506" target="_blank" rel="noopener" class="btn btn-solid">Browse GitHub ↗</a>
+        <a href="contact.html" class="btn btn-outline">Work with me</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-bar">
+    <span class="footer-copy">© 2026 Sayan Dutta</span>
+    <div class="footer-links">
+      <a href="https://github.com/sayan1506" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/sayan-dutta2006" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

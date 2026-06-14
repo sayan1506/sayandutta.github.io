@@ -3,812 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Sayan Dutta — AI engineer and robotics student building production-grade LLM pipelines, agentic systems, and cloud-native AI infrastructure.">
+<meta property="og:title" content="Sayan Dutta — AI Engineer">
+<meta property="og:description" content="Production-grade LLM pipelines, agentic systems, and cloud-native AI infrastructure.">
+<meta property="og:type" content="website">
 <title>Sayan Dutta — AI Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
-<style>
-:root {
-  --bg: #020408;
-  --surface: rgba(255,255,255,0.03);
-  --border: rgba(255,255,255,0.07);
-  --text: #e8eaf0;
-  --muted: rgba(232,234,240,0.4);
-  --accent: #00ffc2;
-  --accent2: #7c3aed;
-  --accent3: #f97316;
-  --mono: 'Space Mono', monospace;
-  --sans: 'Space Grotesk', sans-serif;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:16px}
-body{
-  font-family:var(--sans);
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  cursor:none;
-}
-/* ── CURSOR ── */
-#cursor{
-  position:fixed;width:10px;height:10px;
-  background:var(--accent);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transition:transform 0.15s ease,width 0.3s ease,height 0.3s ease,background 0.3s ease;
-  transform:translate(-50%,-50%);
-  mix-blend-mode:exclusion;
-}
-#cursor-ring{
-  position:fixed;width:36px;height:36px;
-  border:1px solid rgba(0,255,194,0.4);border-radius:50%;
-  pointer-events:none;z-index:9998;
-  transition:transform 0.45s cubic-bezier(0.23,1,0.32,1),width 0.4s,height 0.4s,border-color 0.3s;
-  transform:translate(-50%,-50%);
-}
-body.hovering #cursor{width:6px;height:6px;background:#fff}
-body.hovering #cursor-ring{width:56px;height:56px;border-color:rgba(0,255,194,0.7)}
-
-/* ── CANVAS ── */
-#canvas-wrap{
-  position:fixed;inset:0;z-index:0;
-}
-
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:1.8rem 5vw;
-  display:flex;justify-content:space-between;align-items:center;
-  transition:all 0.4s ease;
-}
-nav.solid{
-  background:rgba(2,4,8,0.85);
-  backdrop-filter:blur(20px);
-  padding:1.2rem 5vw;
-  border-bottom:1px solid var(--border);
-}
-.nav-logo{
-  font-family:var(--mono);font-size:0.85rem;
-  color:var(--accent);letter-spacing:0.1em;
-  text-decoration:none;
-}
-.nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{
-  font-family:var(--mono);font-size:0.75rem;
-  color:var(--muted);text-decoration:none;
-  letter-spacing:0.12em;text-transform:uppercase;
-  transition:color 0.2s;
-}
-.nav-links a:hover{color:var(--accent)}
-
-/* ── LAYOUT ── */
-main{position:relative;z-index:1}
-section{min-height:100vh;padding:0 5vw}
-
-/* ── HERO ── */
-#hero{
-  display:flex;flex-direction:column;
-  justify-content:center;padding-top:10vh;
-  padding-bottom:10vh;
-  position:relative;overflow:hidden;
-}
-.hero-tag{
-  font-family:var(--mono);font-size:0.75rem;
-  color:var(--accent);letter-spacing:0.25em;
-  text-transform:uppercase;margin-bottom:2rem;
-  display:flex;align-items:center;gap:0.75rem;
-}
-.hero-tag::before{
-  content:'';display:block;width:32px;height:1px;
-  background:var(--accent);
-}
-.hero-name{
-  font-size:clamp(3.5rem,10vw,9rem);
-  font-weight:700;line-height:0.92;
-  letter-spacing:-0.04em;
-  margin-bottom:1.5rem;
-}
-.hero-name .line1{display:block;color:var(--text)}
-.hero-name .line2{
-  display:block;
-  -webkit-text-stroke:1px rgba(232,234,240,0.25);
-  color:transparent;
-  position:relative;
-}
-.hero-name .line2 .fill{
-  position:absolute;left:0;top:0;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  width:0%;overflow:hidden;white-space:nowrap;
-  transition:width 1.8s cubic-bezier(0.22,1,0.36,1);
-}
-.hero-name .line2 .fill.revealed{width:100%}
-.hero-role{
-  font-size:clamp(1rem,2vw,1.25rem);
-  color:var(--muted);max-width:520px;
-  line-height:1.7;margin-bottom:3rem;
-  font-weight:300;
-}
-.hero-role strong{color:var(--text);font-weight:500}
-.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-primary{
-  font-family:var(--mono);font-size:0.8rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-  padding:0.9rem 2rem;
-  background:var(--accent);color:#020408;
-  border:none;border-radius:2px;
-  text-decoration:none;font-weight:700;
-  transition:all 0.25s;cursor:none;
-  display:inline-flex;align-items:center;gap:0.5rem;
-}
-.btn-primary:hover{background:#fff;transform:translateY(-2px)}
-.btn-ghost{
-  font-family:var(--mono);font-size:0.8rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-  padding:0.9rem 2rem;
-  background:transparent;color:var(--text);
-  border:1px solid var(--border);border-radius:2px;
-  text-decoration:none;font-weight:400;
-  transition:all 0.25s;cursor:none;
-}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-.hero-stats{
-  position:absolute;right:5vw;bottom:8vh;
-  display:flex;flex-direction:column;gap:2rem;
-  align-items:flex-end;
-}
-.stat{text-align:right}
-.stat-num{
-  font-family:var(--mono);font-size:2.5rem;
-  font-weight:700;color:var(--accent);
-  line-height:1;
-}
-.stat-label{
-  font-size:0.7rem;color:var(--muted);
-  letter-spacing:0.15em;text-transform:uppercase;
-  margin-top:0.25rem;
-}
-.scroll-hint{
-  position:absolute;bottom:2.5rem;left:50%;
-  transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
-}
-.scroll-hint span{
-  font-family:var(--mono);font-size:0.65rem;
-  color:var(--muted);letter-spacing:0.2em;text-transform:uppercase;
-}
-.scroll-line{
-  width:1px;height:50px;
-  background:linear-gradient(var(--accent),transparent);
-  animation:scrollPulse 2s ease infinite;
-}
-@keyframes scrollPulse{
-  0%,100%{opacity:0.3;transform:scaleY(1)}
-  50%{opacity:1;transform:scaleY(0.7)}
-}
-
-/* ── ABOUT ── */
-#about{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:6rem;align-items:center;
-  padding-top:12vh;padding-bottom:12vh;
-}
-.about-left .section-tag{
-  font-family:var(--mono);font-size:0.72rem;
-  color:var(--accent);letter-spacing:0.25em;
-  text-transform:uppercase;margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:0.75rem;
-}
-.about-left .section-tag::before{
-  content:'';display:block;width:24px;height:1px;background:var(--accent);
-}
-.about-heading{
-  font-size:clamp(2rem,4vw,3.5rem);
-  font-weight:700;line-height:1.05;
-  letter-spacing:-0.03em;margin-bottom:2rem;
-}
-.about-heading em{
-  font-style:normal;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.about-body{
-  font-size:1.05rem;line-height:1.8;
-  color:var(--muted);font-weight:300;
-}
-.about-body p+p{margin-top:1rem}
-.about-right{display:flex;flex-direction:column;gap:1.5rem}
-.skill-row{
-  display:flex;flex-direction:column;gap:0.5rem;
-}
-.skill-name{
-  font-family:var(--mono);font-size:0.75rem;
-  color:var(--text);letter-spacing:0.08em;
-  display:flex;justify-content:space-between;
-}
-.skill-name span{color:var(--accent)}
-.skill-bar{
-  height:2px;background:var(--border);
-  border-radius:2px;overflow:hidden;
-}
-.skill-fill{
-  height:100%;border-radius:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  width:0%;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);
-}
-.skill-fill.animated{width:var(--w)}
-
-/* ── PROJECTS ── */
-#projects{padding-top:12vh;padding-bottom:12vh}
-.section-head{
-  display:flex;justify-content:space-between;
-  align-items:flex-end;margin-bottom:5rem;
-}
-.section-head-left .section-tag{
-  font-family:var(--mono);font-size:0.72rem;
-  color:var(--accent);letter-spacing:0.25em;
-  text-transform:uppercase;margin-bottom:1rem;
-  display:flex;align-items:center;gap:0.75rem;
-}
-.section-tag::before{
-  content:'';display:block;width:24px;height:1px;background:var(--accent);
-}
-.section-title{
-  font-size:clamp(2rem,4vw,3.5rem);
-  font-weight:700;letter-spacing:-0.03em;line-height:1.05;
-}
-.projects-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.5px;
-  background:var(--border);
-  border:1px solid var(--border);
-}
-.project-card{
-  background:var(--bg);
-  padding:2.5rem;
-  position:relative;overflow:hidden;
-  transition:background 0.3s;
-  cursor:none;
-}
-.project-card:hover{background:rgba(0,255,194,0.02)}
-.project-card::after{
-  content:'';position:absolute;
-  inset:0;
-  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(0,255,194,0.04),transparent 60%);
-  opacity:0;transition:opacity 0.4s;
-}
-.project-card:hover::after{opacity:1}
-.project-card.featured{
-  grid-column:span 2;
-}
-.project-num{
-  font-family:var(--mono);font-size:0.7rem;
-  color:var(--muted);letter-spacing:0.15em;
-  margin-bottom:2rem;
-}
-.project-name{
-  font-size:1.4rem;font-weight:600;
-  letter-spacing:-0.02em;margin-bottom:1rem;
-  line-height:1.2;
-}
-.project-desc{
-  font-size:0.9rem;color:var(--muted);
-  line-height:1.7;margin-bottom:2rem;font-weight:300;
-}
-.project-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
-.tag{
-  font-family:var(--mono);font-size:0.65rem;
-  padding:0.3rem 0.7rem;
-  border:1px solid var(--border);color:var(--muted);
-  letter-spacing:0.08em;text-transform:uppercase;
-  border-radius:2px;
-}
-.project-link{
-  font-family:var(--mono);font-size:0.72rem;
-  color:var(--accent);text-decoration:none;
-  letter-spacing:0.1em;text-transform:uppercase;
-  display:inline-flex;align-items:center;gap:0.5rem;
-  transition:gap 0.2s;
-}
-.project-link:hover{gap:0.9rem}
-.project-accent-line{
-  position:absolute;top:0;left:0;right:0;
-  height:1px;
-  background:linear-gradient(90deg,var(--accent),transparent);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
-}
-.project-card:hover .project-accent-line{transform:scaleX(1)}
-
-/* ── CONTACT ── */
-#contact{
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  text-align:center;
-  padding-top:12vh;padding-bottom:12vh;
-  position:relative;
-}
-.contact-pre{
-  font-family:var(--mono);font-size:0.75rem;
-  color:var(--accent);letter-spacing:0.25em;
-  text-transform:uppercase;margin-bottom:1.5rem;
-}
-.contact-title{
-  font-size:clamp(3rem,8vw,7rem);
-  font-weight:700;letter-spacing:-0.04em;
-  line-height:0.95;margin-bottom:2rem;
-}
-.contact-title .outline{
-  -webkit-text-stroke:1px rgba(232,234,240,0.2);
-  color:transparent;display:block;
-}
-.contact-sub{
-  font-size:1.05rem;color:var(--muted);
-  max-width:480px;line-height:1.7;
-  margin-bottom:3.5rem;font-weight:300;
-}
-.contact-links{
-  display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
-  margin-bottom:5rem;
-}
-.footer-bar{
-  position:absolute;bottom:3rem;left:5vw;right:5vw;
-  display:flex;justify-content:space-between;align-items:center;
-  border-top:1px solid var(--border);padding-top:1.5rem;
-}
-.footer-copy{
-  font-family:var(--mono);font-size:0.7rem;
-  color:var(--muted);letter-spacing:0.08em;
-}
-.footer-social{display:flex;gap:2rem}
-.footer-social a{
-  font-family:var(--mono);font-size:0.7rem;
-  color:var(--muted);text-decoration:none;
-  letter-spacing:0.1em;text-transform:uppercase;
-  transition:color 0.2s;
-}
-.footer-social a:hover{color:var(--accent)}
-
-/* ── REVEAL ── */
-.reveal{
-  opacity:0;transform:translateY(30px);
-  transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),
-             transform 0.9s cubic-bezier(0.22,1,0.36,1);
-}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
-.reveal-delay-4{transition-delay:0.4s}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  #about{grid-template-columns:1fr;gap:3rem}
-  .projects-grid{grid-template-columns:1fr}
-  .project-card.featured{grid-column:span 1}
-  .hero-stats{display:none}
-  nav{padding:1.2rem 5vw}
-}
-@media(max-width:600px){
-  .nav-links{display:none}
-  .section-head{flex-direction:column;align-items:flex-start;gap:1rem}
-}
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<div id="canvas-wrap"></div>
+<div id="preloader"><div class="pl-name">Sayan Dutta</div></div>
+<div id="transition"></div>
+<div class="ambient"></div>
+<div class="grain"></div>
 
 <nav id="nav">
-  <a href="#hero" class="nav-logo">SD_</a>
+  <a href="index.html" class="nav-logo"><span class="dot"></span>Sayan Dutta</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Work</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="experience.html">Experience</a>
+  <a href="contact.html">Contact</a>
+</div>
 
 <main>
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-tag">Available for opportunities</div>
-    <h1 class="hero-name">
-      <span class="line1">Sayan</span>
-      <span class="line2">
-        Dutta
-        <span class="fill" id="name-fill">Dutta</span>
-      </span>
-    </h1>
-    <p class="hero-role reveal">
-      <strong>AI Engineer & Robotics Student</strong> building production-grade<br>
-      LLM pipelines, agentic systems, and cloud-native AI infra.<br>
-      B.Tech @ UEM Kolkata · Intern @ ITC Infotech
-    </p>
-    <div class="hero-cta reveal reveal-delay-1">
-      <a href="#projects" class="btn-primary">View Work →</a>
-      <a href="https://github.com/sayan1506" target="_blank" class="btn-ghost">GitHub ↗</a>
-    </div>
-    <div class="hero-stats reveal reveal-delay-2">
-      <div class="stat">
-        <div class="stat-num">8+</div>
-        <div class="stat-label">Live Projects</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">GCP</div>
-        <div class="stat-label">Cloud Native</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">LLM</div>
-        <div class="stat-label">Specialist</div>
+    <div class="wrap">
+      <div class="hero-status reveal"><span class="pulse"></span>Available for opportunities</div>
+      <h1 class="h-display hero-title reveal d1">
+        <span class="l1">AI engineer</span>
+        <span class="l2">building what ships.</span>
+      </h1>
+      <p class="lead hero-sub reveal d2">
+        I'm <strong>Sayan Dutta</strong> — a robotics &amp; AI student building production-grade
+        LLM pipelines, agentic systems, and cloud-native infrastructure. B.Tech @ UEM Kolkata.
+      </p>
+      <div class="btn-row reveal d3">
+        <a href="work.html" class="btn btn-solid">View work →</a>
+        <a href="contact.html" class="btn btn-outline">Get in touch</a>
       </div>
     </div>
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+    <div class="scroll-cue"><span class="bar"></span>Scroll</div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="about-left reveal">
-      <div class="section-tag">About</div>
-      <h2 class="about-heading">Building AI that<br><em>actually ships</em></h2>
-      <div class="about-body">
-        <p>Third-year Robotics & AI student who builds things end-to-end — from prompt engineering to GCP deployment. I care about systems that are fast, explainable, and production-ready.</p>
-        <p>My stack lives at the intersection of LLMs, graph databases, and cloud infrastructure. I've shipped RAG pipelines, multi-agent systems, agentic coding tools, and bias mitigation platforms — all live.</p>
-      </div>
-    </div>
-    <div class="about-right reveal reveal-delay-2">
-      <div class="skill-row">
-        <div class="skill-name">LLM / Agentic Systems <span>95%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-name">GCP / Cloud Infra <span>88%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-name">Python / FastAPI <span>90%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-name">RAG / Vector DBs <span>85%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-name">C++ / DSA <span>80%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w:80%"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-name">React / Node.js <span>75%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="--w:75%"></div></div>
+  <!-- INTRO -->
+  <section class="section">
+    <div class="wrap">
+      <div class="text-grid">
+        <div class="label reveal">( About )</div>
+        <div class="prose reveal d1">
+          <p>I build AI systems end-to-end — from the prompt and the retrieval layer down to the infrastructure that runs them.</p>
+          <p>Most projects die in the gap between <strong>"works on my machine"</strong> and <strong>"survives real traffic."</strong> I spend my time in that gap.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-head reveal">
-      <div class="section-head-left">
-        <div class="section-tag">Selected Work</div>
-        <h2 class="section-title">Things I've<br>actually built</h2>
-      </div>
-    </div>
-    <div class="projects-grid reveal reveal-delay-1">
-
-      <div class="project-card featured" id="c1">
-        <div class="project-accent-line"></div>
-        <div class="project-num">01 — Featured</div>
-        <div class="project-name">FairGuard Enterprise</div>
-        <div class="project-desc">GCP-native AI bias mitigation pipeline. Multi-agent system (Schema, Ethics, Storyteller) using Claude API, Vertex AI AutoML with NSGA-II Pareto optimization, canary deployment, and a Streamlit compliance dashboard. Full IaC with Terraform.</div>
-        <div class="project-tags">
-          <span class="tag">Vertex AI</span><span class="tag">Cloud Run</span><span class="tag">LangGraph</span>
-          <span class="tag">Claude API</span><span class="tag">Terraform</span><span class="tag">Optuna</span>
+  <!-- CAPABILITIES -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow reveal">What I do</div>
+      <div class="cap-list">
+        <div class="cap-item reveal">
+          <div class="cap-no">01</div>
+          <div>
+            <h3>Agentic &amp; LLM systems</h3>
+            <p>Multi-agent orchestration, retrieval-augmented generation, tool-use, and Model Context Protocol servers. Pipelines that reason, retrieve, and act — not just autocomplete.</p>
+          </div>
         </div>
-        <a href="https://github.com/sayan1506" target="_blank" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card" id="c2">
-        <div class="project-accent-line"></div>
-        <div class="project-num">02</div>
-        <div class="project-name">Resume Reviewer</div>
-        <div class="project-desc">RAG-powered resume analysis. PyPDFLoader + Gemini embeddings + Pinecone, deployed on GCP Cloud Run with Firebase Hosting and Secret Manager.</div>
-        <div class="project-tags">
-          <span class="tag">FastAPI</span><span class="tag">Pinecone</span><span class="tag">Gemini</span><span class="tag">GCP</span>
+        <div class="cap-item reveal">
+          <div class="cap-no">02</div>
+          <div>
+            <h3>Cloud-native AI infrastructure</h3>
+            <p>GCP from the ground up — Cloud Run, Vertex AI, Firebase, Secret Manager, Terraform. Canary deploys and reproducible infra so models survive contact with real traffic.</p>
+          </div>
         </div>
-        <a href="https://resume-reviewer-navy.vercel.app" target="_blank" class="project-link">Live ↗</a>
-      </div>
-
-      <div class="project-card" id="c3">
-        <div class="project-accent-line"></div>
-        <div class="project-num">03</div>
-        <div class="project-name">Video Intelligence Platform</div>
-        <div class="project-desc">Async GCP video analysis pipeline with Firebase Hosting frontend. Processes video content through AI models to extract structured intelligence at scale.</div>
-        <div class="project-tags">
-          <span class="tag">GCP</span><span class="tag">Firebase</span><span class="tag">Async</span>
+        <div class="cap-item reveal">
+          <div class="cap-no">03</div>
+          <div>
+            <h3>Production engineering</h3>
+            <p>FastAPI services, streaming responses, async pipelines, and cross-vendor format conversion. The unglamorous plumbing that makes inference actually usable.</p>
+          </div>
         </div>
-        <a href="https://video-intelligence-v1.web.app" target="_blank" class="project-link">Live ↗</a>
       </div>
-
-      <div class="project-card" id="c4">
-        <div class="project-accent-line"></div>
-        <div class="project-num">04</div>
-        <div class="project-name">PAI — Personal Assistant</div>
-        <div class="project-desc">JARVIS-inspired open-source desktop voice assistant. Terminal → voice → browser/app control, built in phases with a modular architecture.</div>
-        <div class="project-tags">
-          <span class="tag">Python</span><span class="tag">Voice AI</span><span class="tag">Open Source</span>
-        </div>
-        <a href="https://github.com/sayan1506" target="_blank" class="project-link">GitHub ↗</a>
-      </div>
-
-      <div class="project-card" id="c5">
-        <div class="project-accent-line"></div>
-        <div class="project-num">05</div>
-        <div class="project-name">GraphRAG Pipeline</div>
-        <div class="project-desc">Knowledge graph meets vector search. Neo4j + FAISS hybrid retrieval for structured reasoning over unstructured data — Cypher queries + dense embeddings.</div>
-        <div class="project-tags">
-          <span class="tag">Neo4j</span><span class="tag">FAISS</span><span class="tag">LangChain</span>
-        </div>
-        <a href="https://github.com/sayan1506" target="_blank" class="project-link">GitHub ↗</a>
-      </div>
-
-      <div class="project-card" id="c6">
-        <div class="project-accent-line"></div>
-        <div class="project-num">06</div>
-        <div class="project-name">MCP Job Search Assistant</div>
-        <div class="project-desc">FastMCP server + Claude Desktop integration for intelligent job search automation. Agentic workflow connecting to live job APIs through the Model Context Protocol.</div>
-        <div class="project-tags">
-          <span class="tag">FastMCP</span><span class="tag">Claude</span><span class="tag">Agentic</span>
-        </div>
-        <a href="https://github.com/sayan1506" target="_blank" class="project-link">GitHub ↗</a>
-      </div>
-
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-pre reveal">Let's build something</div>
-    <h2 class="contact-title reveal reveal-delay-1">
-      Get in
-      <span class="outline">touch.</span>
-    </h2>
-    <p class="contact-sub reveal reveal-delay-2">
-      Open to internships, research collaborations, freelance AI projects, and interesting open source contributions.
-    </p>
-    <div class="contact-links reveal reveal-delay-3">
-      <a href="https://www.linkedin.com/in/sayan-dutta2006" target="_blank" class="btn-primary">LinkedIn ↗</a>
-      <a href="https://github.com/sayan1506" target="_blank" class="btn-ghost">GitHub ↗</a>
+  <!-- SELECTED WORK -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow reveal">Selected work</div>
+      <div class="project-list">
+
+        <a href="work.html" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">01</span>
+            <span class="project-name">FairGuard Enterprise</span>
+            <span class="project-badge">Featured</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">A GCP-native AI bias-mitigation pipeline — three coordinated agents on the Claude API, Vertex AI with NSGA-II optimization, canary deploys, and full Terraform IaC.</p>
+          <div class="project-tags"><span>Vertex AI</span><span>LangGraph</span><span>Claude API</span><span>Terraform</span></div>
+        </a>
+
+        <a href="work.html" class="project-row reveal">
+          <div class="project-head">
+            <span class="project-no">02</span>
+            <span class="project-name">Resume Reviewer</span>
+            <span class="project-arrow">↗</span>
+          </div>
+          <p class="project-desc">RAG-powered resume analysis — Gemini embeddings and Pinecone retrieval, deployed on Cloud Run with Firebase Hosting and Secret Manager.</p>
+          <div class="project-tags"><span>FastAPI</span><span>Pinecone</span><span>Gemini</span><span>GCP</span></div>
+        </a>
+
+      </div>
+      <div class="btn-row reveal" style="margin-top:3rem">
+        <a href="work.html" class="btn btn-outline">All projects →</a>
+      </div>
     </div>
-    <div class="footer-bar reveal reveal-delay-4">
-      <span class="footer-copy">© 2026 Sayan Dutta — Built from scratch</span>
-      <div class="footer-social">
-        <a href="https://github.com/sayan1506" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/sayan-dutta2006" target="_blank">LinkedIn</a>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow reveal">Let's build</div>
+      <h2 class="h-section reveal d1">Have something<br><span class="soft">worth shipping?</span></h2>
+      <div class="btn-row reveal d2" style="margin-top:2.5rem">
+        <a href="contact.html" class="btn btn-solid">Start a conversation →</a>
+        <a href="https://github.com/sayan1506" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
       </div>
     </div>
   </section>
 
 </main>
 
-<script type="module">
-import * as THREE from 'three';
+<footer>
+  <div class="footer-bar">
+    <span class="footer-copy">© 2026 Sayan Dutta</span>
+    <div class="footer-links">
+      <a href="https://github.com/sayan1506" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/sayan-dutta2006" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
 
-// ── THREE SCENE ──
-const wrap = document.getElementById('canvas-wrap');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 200);
-camera.position.z = 6;
-
-const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
-renderer.setSize(innerWidth,innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.setClearColor(0x000000,0);
-wrap.appendChild(renderer.domElement);
-
-// Lights
-const ambient = new THREE.AmbientLight(0xffffff,0.05);
-scene.add(ambient);
-const lights = [
-  new THREE.PointLight(0x00ffc2,3,12),
-  new THREE.PointLight(0x7c3aed,3,12),
-  new THREE.PointLight(0xf97316,1.5,10),
-];
-lights[0].position.set(4,3,2);
-lights[1].position.set(-4,-2,2);
-lights[2].position.set(0,4,-2);
-lights.forEach(l=>scene.add(l));
-
-// Central crystalline structure
-const coreGeo = new THREE.IcosahedronGeometry(1.1,1);
-const coreMat = new THREE.MeshStandardMaterial({
-  color:0x020408,
-  metalness:0.9,roughness:0.1,
-  wireframe:false,
-});
-const core = new THREE.Mesh(coreGeo,coreMat);
-scene.add(core);
-
-const wireGeo = new THREE.IcosahedronGeometry(1.15,1);
-const wireMat = new THREE.LineBasicMaterial({color:0x00ffc2,transparent:true,opacity:0.15});
-const wireMesh = new THREE.LineSegments(new THREE.EdgesGeometry(wireGeo),wireMat);
-scene.add(wireMesh);
-
-// Outer ring of satellites
-const satGroup = new THREE.Group();
-scene.add(satGroup);
-const satGeos = [
-  new THREE.OctahedronGeometry(0.18,0),
-  new THREE.TetrahedronGeometry(0.18,0),
-  new THREE.BoxGeometry(0.22,0.22,0.22),
-  new THREE.OctahedronGeometry(0.14,0),
-  new THREE.TetrahedronGeometry(0.14,0),
-  new THREE.BoxGeometry(0.18,0.18,0.18),
-  new THREE.OctahedronGeometry(0.1,0),
-  new THREE.TetrahedronGeometry(0.1,0),
-];
-const satColors = [0x00ffc2,0x7c3aed,0xf97316,0x00ffc2,0x7c3aed,0xf97316,0x00ffc2,0x7c3aed];
-const sats = satGeos.map((geo,i)=>{
-  const mat = new THREE.MeshStandardMaterial({
-    color:satColors[i],metalness:0.8,roughness:0.2,
-    emissive:satColors[i],emissiveIntensity:0.3
-  });
-  const mesh = new THREE.Mesh(geo,mat);
-  const angle = (i/satGeos.length)*Math.PI*2;
-  const radius = 2.2 + (i%2)*0.4;
-  mesh.position.set(Math.cos(angle)*radius,Math.sin(angle*0.7)*0.8,Math.sin(angle)*radius*0.5);
-  mesh.userData = {angle,radius,speed:0.003+i*0.001,yOffset:Math.sin(i)*0.5};
-  satGroup.add(mesh);
-  return mesh;
-});
-
-// Particles
-const pCount = window.innerWidth < 700 ? 800 : 2500;
-const pPos = new Float32Array(pCount*3);
-for(let i=0;i<pCount;i++){
-  const r = 4+Math.random()*14;
-  const th = Math.random()*Math.PI*2;
-  const ph = Math.acos(2*Math.random()-1);
-  pPos[i*3]=r*Math.sin(ph)*Math.cos(th);
-  pPos[i*3+1]=r*Math.sin(ph)*Math.sin(th);
-  pPos[i*3+2]=r*Math.cos(ph);
-}
-const pGeo = new THREE.BufferGeometry();
-pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-const pMat = new THREE.PointsMaterial({
-  color:0x00ffc2,size:0.025,transparent:true,
-  opacity:0.55,blending:THREE.AdditiveBlending,sizeAttenuation:true
-});
-const particles = new THREE.Points(pGeo,pMat);
-scene.add(particles);
-
-// Mouse
-let mx=0,my=0,tmx=0,tmy=0;
-document.addEventListener('mousemove',e=>{
-  tmx=(e.clientX/innerWidth)*2-1;
-  tmy=-(e.clientY/innerHeight)*2+1;
-});
-
-let scrollT=0,targetST=0;
-window.addEventListener('scroll',()=>{
-  const maxS=document.body.scrollHeight-innerHeight;
-  targetST=maxS>0?scrollY/maxS:0;
-},{passive:true});
-
-const clock = new THREE.Clock();
-
-function animate(){
-  requestAnimationFrame(animate);
-  const t=clock.getElapsedTime();
-
-  mx+=(tmx-mx)*0.04;
-  my+=(tmy-my)*0.04;
-  scrollT+=(targetST-scrollT)*0.05;
-
-  camera.position.x+=(mx*1.5-camera.position.x)*0.025;
-  camera.position.y+=(my*0.8-camera.position.y)*0.025;
-  camera.lookAt(0,0,0);
-
-  core.rotation.x=t*0.08;
-  core.rotation.y=t*0.12;
-  wireMesh.rotation.x=-t*0.06;
-  wireMesh.rotation.y=-t*0.1;
-
-  lights[0].position.x=4+Math.sin(t*0.3)*2;
-  lights[0].position.y=3+Math.cos(t*0.4)*1.5;
-  lights[1].position.x=-4+Math.sin(t*0.4+2)*2;
-  lights[1].position.y=-2+Math.cos(t*0.3+1)*1.5;
-
-  sats.forEach((s,i)=>{
-    const ud=s.userData;
-    ud.angle+=ud.speed*(1+scrollT*0.5);
-    const r=ud.radius;
-    s.position.x=Math.cos(ud.angle)*r;
-    s.position.z=Math.sin(ud.angle)*r*0.5;
-    s.position.y=Math.sin(ud.angle*0.7)*0.8+Math.sin(t*0.5+i)*0.2;
-    s.rotation.x+=0.02;s.rotation.y+=0.015;
-  });
-
-  satGroup.rotation.y=scrollT*Math.PI*1.5;
-  satGroup.position.y=-scrollT*3;
-
-  particles.rotation.y=t*0.018+mx*0.1;
-  particles.rotation.x=my*0.05;
-  pMat.opacity=0.4+Math.sin(t*0.4)*0.1;
-
-  renderer.render(scene,camera);
-}
-animate();
-
-window.addEventListener('resize',()=>{
-  camera.aspect=innerWidth/innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
-});
-
-// ── CURSOR ──
-const cur=document.getElementById('cursor');
-const ring=document.getElementById('cursor-ring');
-let cx=0,cy=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY});
-(function cursorLoop(){
-  requestAnimationFrame(cursorLoop);
-  cur.style.left=cx+'px';cur.style.top=cy+'px';
-  rx+=(cx-rx)*0.12;ry+=(cy-ry)*0.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-})();
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
-});
-
-// ── REVEAL ──
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting)e.target.classList.add('visible');
-  });
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-// ── SKILL BARS ──
-const skillObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('animated'));
-    }
-  });
-},{threshold:0.3});
-const aboutSec=document.getElementById('about');
-if(aboutSec)skillObs.observe(aboutSec);
-
-// ── NAME FILL ──
-setTimeout(()=>{
-  document.getElementById('name-fill')?.classList.add('revealed');
-},400);
-
-// ── NAV ──
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  nav.classList.toggle('solid',scrollY>80);
-},{passive:true});
-
-// ── PROJECT CARD MOUSE ──
-document.querySelectorAll('.project-card').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
-  });
-});
-</script>
+<script src="assets/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="assets/bg.js"></script>
 </body>
 </html>
