@@ -61,7 +61,7 @@
     if (texCache[key]) return texCache[key];
 
     var pad = 28, fontPx = 100;
-    var font = '600 ' + fontPx + "px 'Geist', ui-monospace, 'SFMono-Regular', Menlo, monospace";
+    var font = '600 ' + fontPx + "px 'IBM Plex Sans', ui-monospace, 'SFMono-Regular', Menlo, monospace";
     var c = document.createElement('canvas');
     var cx = c.getContext('2d');
 
@@ -187,7 +187,7 @@
     if (reduced) renderStatic();
   });
 
-  // wait for the brand font so glyph textures bake in Geist (falls back gracefully)
+  // wait for the brand font so glyph textures bake in IBM Plex Sans (falls back gracefully)
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(build);
   } else {

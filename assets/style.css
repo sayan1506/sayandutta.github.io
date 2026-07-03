@@ -2,7 +2,7 @@
    Sayan Dutta — Portfolio
    Design system cloned from red1-for-hek.vercel.app
    Dark minimal. Violet-tinted near-black. Single accent.
-   Geist. Single column. Lots of space. Slow quiet fades.
+   IBM Plex Sans. Single column. Lots of space. Slow quiet fades.
    ============================================================ */
 
 :root {
@@ -15,7 +15,7 @@
   --accent-light: #cbd0d6;
   --border: rgba(229, 231, 235, 0.08);
   --border-2: rgba(229, 231, 235, 0.14);
-  --font: 'Geist', system-ui, -apple-system, sans-serif;
+  --font: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --ease: cubic-bezier(0.33, 0.11, 1, 0.72);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(1.5rem, 6vw, 7rem);
